@@ -13,6 +13,7 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --without test --no-root --no-interaction --no-ansi
 
 COPY src/ .
+COPY migrations/ .
 COPY main.py .
 
 EXPOSE 8000

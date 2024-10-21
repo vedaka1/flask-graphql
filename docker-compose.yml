@@ -22,8 +22,9 @@ services:
       - 8000:8000
     volumes:
       - ./src:/app/src
-      - ./main.py:/app/
-    command: sh -c "flask main:create_app --host=0.0.0.0 --port=8000"
+      - ./migrations:/app/migrations
+      - ./main.py:/app/main.py
+    command: sh -c "flask --app=main:create_app run --host=0.0.0.0 --port=8000"
 
   migrations:
     <<: *app

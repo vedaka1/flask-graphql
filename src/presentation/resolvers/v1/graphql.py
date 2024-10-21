@@ -1,6 +1,12 @@
 from pathlib import Path
 
-from ariadne import MutationType, QueryType, graphql_sync, make_executable_schema
+from ariadne import (
+    MutationType,
+    QueryType,
+    graphql_sync,
+    load_schema_from_path,
+    make_executable_schema,
+)
 from ariadne.explorer import ExplorerGraphiQL
 from flask import Flask, jsonify, request
 
@@ -12,8 +18,14 @@ from src.presentation.resolvers.v1.views.users import (
     resolve_get_users,
 )
 
-type_defs = open(Path(__file__).parent / "schemas" / "users.graphql").read()
+user_types = load_schema_from_path(Path(__file__).parent / "schemas" / "users.graphql")
+
+type_defs = [
+    user_types,
+]
+
 explorer_html = ExplorerGraphiQL().html(None)
+
 app = Flask("__main__")
 
 query = QueryType()
