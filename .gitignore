@@ -1,0 +1,17 @@
+.venv
+.vscode
+.env
+.env.production
+.mypy_cache
+.idea
+.pytest_cache
+.VSCodeCounter
+__pycache__
+*.pyc
+*.key
+*.key.pub
+*.crt
+test.*
+restats
+*.log*
+images/*

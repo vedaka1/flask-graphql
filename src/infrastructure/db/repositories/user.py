@@ -1,0 +1,45 @@
+import logging
+from uuid import UUID
+
+from flask_sqlalchemy import SQLAlchemy
+
+from src.domain.users.entities import User
+from src.domain.users.repositories import UserRepositoryInterface
+from src.infrastructure.db.models.user import UserModel, map_to_user
+
+logger = logging.getLogger("__main__")
+
+
+class UserRepository(UserRepositoryInterface):
+
+    def __init__(self, db: SQLAlchemy):
+        self.db = db
+
+    def create(self, user: User) -> None:
+        user_model = UserModel(
+            id=user.id,  # type: ignore
+            email=user.email,  # type: ignore
+            hashed_password=user.hashed_password,  # type: ignore
+            first_name=user.first_name,  # type: ignore
+            last_name=user.last_name,  # type: ignore
+            is_verified=user.is_verified,  # type: ignore
+        )
+
+        self.db.session.add(user_model)
+
+        return None
+
+    def get_many(self) -> list[User]:
+        users = self.db.session.query(UserModel).all()
+
+        return [map_to_user(user) for user in users]
+
+    def get_by_id(self, id: UUID) -> User | None:
+        user = self.db.session.get_one(UserModel, id)
+
+        return map_to_user(user) if user else None
+
+    def delete(self, id: UUID) -> None:
+        user = self.db.session.get_one(UserModel, id)
+
+        self.db.session.delete(user)
