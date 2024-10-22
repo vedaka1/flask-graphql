@@ -18,10 +18,7 @@ from src.infrastructure.db.repositories.user import UserRepository
 def resolve_create_user(
     _: Any,
     info: GraphQLResolveInfo,
-    email: str,
-    password: str,
-    first_name: str | None = None,
-    last_name: str | None = None,
+    user: dict[str, Any],
 ) -> dict[str, Any]:
     db: SQLAlchemy = info.context["db"]
 
@@ -32,10 +29,10 @@ def resolve_create_user(
     )
 
     command = CreateUserCommand(
-        email=email,
-        first_name=first_name,
-        last_name=last_name,
-        password=password,
+        email=user["email"],
+        first_name=user["first_name"],
+        last_name=user["last_name"],
+        password=user["password"],
     )
 
     response = usecase.execute(command=command)
@@ -47,7 +44,7 @@ def resolve_create_user(
 def resolve_delete_user(
     _: Any,
     info: GraphQLResolveInfo,
-    id: UUID,
+    id: str,
 ) -> None:
     db: SQLAlchemy = info.context["db"]
 
@@ -56,7 +53,7 @@ def resolve_delete_user(
         commiter=Commiter(db=db),
     )
 
-    command = DeleteUserCommand(id=id)
+    command = DeleteUserCommand(id=UUID(id))
 
     usecase.execute(command=command)
 

@@ -1,7 +1,7 @@
 from flask import Flask
 
 from src.infrastructure.db.database import init_db, init_flask_migrations
-from src.presentation.resolvers.v1.router import init_routes
+from src.presentation.api.v1.router import init_routes
 
 
 def create_app() -> Flask:
