@@ -5,11 +5,10 @@ from ariadne import convert_kwargs_to_snake_case
 from flask_sqlalchemy import SQLAlchemy
 from graphql import GraphQLResolveInfo
 
-from src.application.users.commands import CreateUserCommand, GetUserCommand
+from src.application.users.commands import CreateUserCommand
 from src.application.users.dto import DeleteUserCommand
 from src.application.users.usecases.create import CreateUserUseCase
 from src.application.users.usecases.delete import DeleteUserUseCase
-from src.application.users.usecases.get import GetUsersListUseCase, GetUserUseCase
 from src.infrastructure.authentication.password_hasher import PasswordHasher
 from src.infrastructure.db.commiter import Commiter
 from src.infrastructure.db.repositories.user import UserRepository
@@ -62,38 +61,3 @@ def resolve_delete_user(
     usecase.execute(command=command)
 
     return None
-
-
-@convert_kwargs_to_snake_case
-def resolve_get_users(
-    _: Any,
-    info: GraphQLResolveInfo,
-) -> list[dict[str, Any]]:
-    db: SQLAlchemy = info.context["db"]
-
-    usecase = GetUsersListUseCase(
-        user_repository=UserRepository(db=db),
-    )
-
-    response = usecase.execute()
-
-    return response
-
-
-@convert_kwargs_to_snake_case
-def resolve_get_user_by_id(
-    _: Any,
-    info: GraphQLResolveInfo,
-    id: str,
-) -> dict[str, Any] | None:
-    db: SQLAlchemy = info.context["db"]
-
-    usecase = GetUserUseCase(
-        user_repository=UserRepository(db=db),
-    )
-
-    command = GetUserCommand(id=UUID(id))
-
-    response = usecase.execute(command=command)
-
-    return response

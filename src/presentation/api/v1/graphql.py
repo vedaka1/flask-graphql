@@ -1,9 +1,9 @@
 from ariadne import graphql_sync
 from ariadne.explorer import ExplorerGraphiQL
 from flask import Flask, Response, jsonify, request
-from views import schema
 
 from src.infrastructure.db.database import db
+from src.presentation.api.v1.schema import schema
 
 explorer_html = ExplorerGraphiQL().html(None)  # type: ignore
 
