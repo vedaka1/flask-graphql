@@ -18,6 +18,6 @@ type Query {
 }
 
 type Mutation {
-    createUser(email: String!, firstName: String, lastName: String, password: String!): UserIn!
+    createUser(input: UserIn!): UserOut!
     deleteUser(id: String!): UserOut
 }

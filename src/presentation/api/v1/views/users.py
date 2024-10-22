@@ -1,6 +1,7 @@
 from typing import Any
 from uuid import UUID
 
+from ariadne import convert_kwargs_to_snake_case
 from flask_sqlalchemy import SQLAlchemy
 from graphql import GraphQLResolveInfo
 
@@ -14,6 +15,7 @@ from src.infrastructure.db.commiter import Commiter
 from src.infrastructure.db.repositories.user import UserRepository
 
 
+@convert_kwargs_to_snake_case
 def resolve_create_user(
     _: Any,
     info: GraphQLResolveInfo,
@@ -42,6 +44,7 @@ def resolve_create_user(
     return response
 
 
+@convert_kwargs_to_snake_case
 def resolve_delete_user(
     _: Any,
     info: GraphQLResolveInfo,
@@ -61,6 +64,7 @@ def resolve_delete_user(
     return None
 
 
+@convert_kwargs_to_snake_case
 def resolve_get_users(
     _: Any,
     info: GraphQLResolveInfo,
@@ -76,6 +80,7 @@ def resolve_get_users(
     return response
 
 
+@convert_kwargs_to_snake_case
 def resolve_get_user_by_id(
     _: Any,
     info: GraphQLResolveInfo,
