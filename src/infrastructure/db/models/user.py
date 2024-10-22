@@ -6,7 +6,7 @@ from src.domain.users.entities import User
 from src.infrastructure.db.database import db
 
 
-class UserModel(db.Model):
+class UserModel(db.Model):  # type: ignore
     __tablename__ = "users"
 
     id: Mapped[UUID] = mapped_column(primary_key=True, index=True)

@@ -1,6 +1,8 @@
+from typing import Any
 from uuid import UUID
 
 from flask_sqlalchemy import SQLAlchemy
+from graphql import GraphQLResolveInfo
 
 from src.application.users.commands import CreateUserCommand, GetUserCommand
 from src.application.users.dto import DeleteUserCommand
@@ -13,13 +15,13 @@ from src.infrastructure.db.repositories.user import UserRepository
 
 
 def resolve_create_user(
-    _,
-    info,
+    _: Any,
+    info: GraphQLResolveInfo,
     email: str,
     password: str,
     first_name: str | None = None,
     last_name: str | None = None,
-):
+) -> dict[str, Any]:
     db: SQLAlchemy = info.context["db"]
 
     usecase = CreateUserUseCase(
@@ -41,28 +43,28 @@ def resolve_create_user(
 
 
 def resolve_delete_user(
-    _,
-    info,
+    _: Any,
+    info: GraphQLResolveInfo,
     id: UUID,
-):
+) -> None:
     db: SQLAlchemy = info.context["db"]
 
     usecase = DeleteUserUseCase(
-        commiter=Commiter(db=db),
         user_repository=UserRepository(db=db),
+        commiter=Commiter(db=db),
     )
 
     command = DeleteUserCommand(id=id)
 
-    response = usecase.execute(command=command)
+    usecase.execute(command=command)
 
-    return response
+    return None
 
 
 def resolve_get_users(
-    _,
-    info,
-):
+    _: Any,
+    info: GraphQLResolveInfo,
+) -> list[dict[str, Any]]:
     db: SQLAlchemy = info.context["db"]
 
     usecase = GetUsersListUseCase(
@@ -75,10 +77,10 @@ def resolve_get_users(
 
 
 def resolve_get_user_by_id(
-    _,
-    info,
+    _: Any,
+    info: GraphQLResolveInfo,
     id: str,
-):
+) -> dict[str, Any] | None:
     db: SQLAlchemy = info.context["db"]
 
     usecase = GetUserUseCase(

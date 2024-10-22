@@ -17,12 +17,12 @@ class UserRepository(UserRepositoryInterface):
 
     def create(self, user: User) -> None:
         user_model = UserModel(
-            id=user.id,  # type: ignore
-            email=user.email,  # type: ignore
-            hashed_password=user.hashed_password,  # type: ignore
-            first_name=user.first_name,  # type: ignore
-            last_name=user.last_name,  # type: ignore
-            is_verified=user.is_verified,  # type: ignore
+            id=user.id,
+            email=user.email,
+            hashed_password=user.hashed_password,
+            first_name=user.first_name,
+            last_name=user.last_name,
+            is_verified=user.is_verified,
         )
 
         self.db.session.add(user_model)

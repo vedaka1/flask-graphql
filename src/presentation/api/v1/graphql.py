@@ -8,10 +8,10 @@ from ariadne import (
     make_executable_schema,
 )
 from ariadne.explorer import ExplorerGraphiQL
-from flask import Flask, jsonify, request
+from flask import Flask, Response, jsonify, request
 
 from src.infrastructure.db.database import db
-from src.presentation.resolvers.v1.views.users import (
+from src.presentation.api.v1.views.users import (
     resolve_create_user,
     resolve_delete_user,
     resolve_get_user_by_id,
@@ -24,7 +24,7 @@ type_defs = [
     user_types,
 ]
 
-explorer_html = ExplorerGraphiQL().html(None)
+explorer_html = ExplorerGraphiQL().html(None)  # type: ignore
 
 app = Flask("__main__")
 
@@ -39,7 +39,7 @@ mutation.set_field("deleteUser", resolve_delete_user)
 schema = make_executable_schema(type_defs, query, mutation)
 
 
-def graphql_server():
+def graphql_server() -> tuple[str, int] | tuple[Response, int]:
     if request.method == "GET":
         return explorer_html, 200
 

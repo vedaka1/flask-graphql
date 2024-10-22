@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Any
 
 from src.application.common.interfaces.commiter import CommiterInterface
 from src.application.users.dto import DeleteUserCommand

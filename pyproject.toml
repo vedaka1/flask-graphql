@@ -19,6 +19,22 @@ psycopg2-binary = "^2.9.10"
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.3"
 
+
+
+
+[tool.poetry.group.lint.dependencies]
+mypy = "^1.12.1"
+black = "^24.10.0"
+isort = "^5.13.2"
+pre-commit = "^4.0.1"
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+disable_error_code = ["import-untyped", "type-abstract"]
+color_output = true
+pretty = true
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

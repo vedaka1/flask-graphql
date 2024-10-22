@@ -1,16 +1,14 @@
-import email
 from abc import ABC, abstractmethod
 from uuid import UUID
 
 from flask_sqlalchemy.session import Session
-from sqlalchemy import delete
 
 from src.domain.users.entities import User
 
 
 class UserRepositoryInterface(ABC):
 
-    def ___init__(self, session: Session):
+    def ___init__(self, session: Session) -> None:
         self.session = session
 
     @abstractmethod

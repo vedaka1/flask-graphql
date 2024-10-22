@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from typing import Any
 
-from flask_sqlalchemy import SQLAlchemy
-
 from src.application.common.interfaces.commiter import CommiterInterface
 from src.application.common.interfaces.password_hasher import PasswordHasherInterface
 from src.application.users.commands import CreateUserCommand
@@ -28,6 +26,7 @@ class CreateUserUseCase:
         )
 
         self.user_repository.create(user)
+
         self.commiter.commit()
 
         return {
