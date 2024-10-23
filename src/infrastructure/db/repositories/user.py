@@ -31,11 +31,7 @@ class UserRepository(UserRepositoryInterface):
 
     def get_many(self) -> list[User]:
         users = self.db.session.query(UserModel).all()
-        test = self.db.session.query(UserModel)
-        logger.error(f"{test} {type(test)}")
-        logger.error(f"{test.count()}")
-        for x in test:
-            logger.error(x.id)
+
         return [map_to_user(user) for user in users]
 
     def get_by_id(self, id: UUID) -> User | None:
