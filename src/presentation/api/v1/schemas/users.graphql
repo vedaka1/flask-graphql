@@ -7,7 +7,7 @@ input createUserInput{
 
 type UserOut {
     id: ID!
-    email: String!
+    email: String
     firstName: String
     lastName: String
 }

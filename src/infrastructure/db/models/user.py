@@ -16,6 +16,9 @@ class UserModel(db.Model):  # type: ignore
     last_name: Mapped[str | None] = mapped_column(nullable=True)
     is_verified: Mapped[bool] = mapped_column(default=False, nullable=False)
 
+    def __init__(self, **kwargs) -> None:  # type: ignore
+        self.__dict__.update(kwargs)
+
     def __repr__(self) -> str:
         return f"UserModel({self.__dict__})"
 

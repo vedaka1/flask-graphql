@@ -30,8 +30,8 @@ def resolve_create_user(
 
     command = CreateUserCommand(
         email=user["email"],
-        first_name=user["first_name"],
-        last_name=user["last_name"],
+        first_name=user["first_name"] if user.get("first_name") else None,
+        last_name=user["last_name"] if user.get("last_name") else None,
         password=user["password"],
     )
 
