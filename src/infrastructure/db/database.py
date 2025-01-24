@@ -18,7 +18,7 @@ migrate = Migrate()
 
 @lru_cache(1)
 def init_db(app: Flask) -> SQLAlchemy:
-    app.config["SQLALCHEMY_DATABASE_URI"] = settings.db.DB_URL
+    app.config['SQLALCHEMY_DATABASE_URI'] = settings.db.DB_URL
 
     db.init_app(app)
 
@@ -27,7 +27,6 @@ def init_db(app: Flask) -> SQLAlchemy:
 
 @lru_cache(1)
 def init_flask_migrations(app: Flask) -> Migrate:
-
     migrate.init_app(app, db)
 
     return migrate

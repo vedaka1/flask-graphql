@@ -20,7 +20,12 @@ def resolve_create_user(
     info: GraphQLResolveInfo,
     user: dict[str, Any],
 ) -> dict[str, Any]:
-    db: SQLAlchemy = info.context["db"]
+    email = user['email']
+    first_name = user.get('first_name')
+    last_name = user.get('last_name')
+    password = user['password']
+
+    db: SQLAlchemy = info.context['db']
 
     usecase = CreateUserUseCase(
         commiter=Commiter(db=db),
@@ -29,14 +34,13 @@ def resolve_create_user(
     )
 
     command = CreateUserCommand(
-        email=user["email"],
-        first_name=user["first_name"] if user.get("first_name") else None,
-        last_name=user["last_name"] if user.get("last_name") else None,
-        password=user["password"],
+        email=email,
+        first_name=first_name,
+        last_name=last_name,
+        password=password,
     )
 
     response = usecase.execute(command=command)
-
     return response
 
 
@@ -46,7 +50,7 @@ def resolve_delete_user(
     info: GraphQLResolveInfo,
     id: str,
 ) -> None:
-    db: SQLAlchemy = info.context["db"]
+    db: SQLAlchemy = info.context['db']
 
     usecase = DeleteUserUseCase(
         user_repository=UserRepository(db=db),

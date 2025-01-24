@@ -7,11 +7,10 @@ from src.domain.users.entities import User
 from src.domain.users.repositories import UserRepositoryInterface
 from src.infrastructure.db.models.user import UserModel, map_to_user
 
-logger = logging.getLogger("__main__")
+logger = logging.getLogger('__main__')
 
 
 class UserRepository(UserRepositoryInterface):
-
     def __init__(self, db: SQLAlchemy):
         self.db = db
 
